@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hotel.mapper.EmpMapper">
+	
+	<select id="getEmpByCond" resultMap="com.example.hotel.mapper.CommonMapper.empMap">
+		select *
+		from emp emp left join dept on emp.deptId=dept.deptId
+		<where>
+			<if test="empId != null ">
+				empId=#{empId}
+			</if>
+			<if test="empName!=null">
+				and empName like concat('%',#{empName},'%')
+			</if>
+			<if test="deptId!=null">
+				and emp.deptId=#{deptId}
+			</if>
+			<if test="deptName!=null">
+				and dept.deptName=#{deptName}
+			</if>
+			<if test="isAdmin!=null">
+				and isAdmin=#{isAdmin}
+			</if>
+		</where>
+		order by empId
+	</select>
+	
+	
+	<insert id="addEmp" useGeneratedKeys="true" keyProperty="empId">
+		insert into emp(empName, empSex, empAge, empPhone, deptId, salary, avatar)
+		values (#{empName}, #{empSex}, #{empAge}, #{empPhone}, #{dept.deptId}, #{salary}, #{avatar})
+	</insert>
+	
+	<update id="updateEmp">
+		update emp
+		<set>
+			<if test="empName!=null">
+				empName=#{empName},
+			</if>
+			<if test="empAge!=null">
+				empAge=#{empAge},
+			</if>
+			<if test="dept!=null">
+				deptId=#{dept.deptId},
+			</if>
+			<if test="empSex!=null">
+				empSex=#{empSex},
+			</if>
+			<if test="empPhone!=null">
+				empPhone=#{empPhone},
+			</if>
+			<if test="avatar!=null">
+				avatar=#{avatar},
+			</if>
+			<if test="isAdmin!=null">
+				isAdmin=#{isAdmin},
+			</if>
+			<if test="password!=null">
+				password=#{password},
+			</if>
+			<if test="salary!=null">
+				salary=#{salary}
+			</if>
+		</set>
+		where empId = #{empId}
+	</update>
+	
+	<delete id="delMulEmp">
+		delete
+		from emp
+		where emp.empId in
+		<foreach collection="empIds" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	
+	<update id="updateAvatar">
+		update emp
+		set avatar=#{avatar}
+		where empId = #{empId}
+	</update>
+	
+	<update id="updatePwd">
+		update emp
+		set password=#{newpwd}
+		where empId = #{empId}
+	</update>
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hotel.mapper.TableMapper">
+	
+	<select id="getTableByCond" resultType="Table">
+		select *
+		FROM diningTable dT
+		<where>
+			<if test="tableId!=null">
+				tableId=#{tableId}
+			</if>
+			<if test="minSeats!=null">
+				and seats &gt;=#{minSeats}
+			</if>
+			<if test="maxSeats!=null">
+				and seats &lt;=#{maxSeats}
+			</if>
+			<if test="status!=null">
+				and status=#{status}
+			</if>
+		</where>
+		order by tableId
+	</select>
+	
+	
+	<insert id="addTable" useGeneratedKeys="true" keyProperty="tableId">
+		insert into diningTable(seats)
+		values (#{seats})
+	</insert>
+	
+	<update id="updateTable">
+		update diningTable
+		<set>
+			<if test="seats!=null">
+				seats=#{seats}
+			</if>
+		</set>
+		where tableId = #{tableId}
+	</update>
+	
+	<delete id="delMulTable">
+		delete
+		from diningTable
+		where tableId in
+		<foreach collection="tableIds" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+</mapper>

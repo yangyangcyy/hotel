@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hotel.mapper.DepotMapper">
+	
+	<select id="getDepotByCond" resultMap="com.example.hotel.mapper.CommonMapper.depotMap">
+		SELECT *
+		from depot d
+		<where>
+			<if test="depotId!=null">
+				d.depotId=#{depotId}
+			</if>
+			<if test="depotAddress!=null">
+				and d.depotAddress like concat('%', #{depotAddress},'%')
+			</if>
+		</where>
+		order by depotId
+	</select>
+	
+	
+	<insert id="addDepot" useGeneratedKeys="true" keyProperty="depotId">
+		insert into depot(depotAddress)
+		values (#{depotAddress})
+	</insert>
+	
+	<update id="updateDepot">
+		update depot
+		<set>
+			<if test="depotAddress!=null">
+				depotAddress=#{depotAddress}
+			</if>
+		</set>
+		where depotId = #{depotId}
+	</update>
+	
+	<delete id="delMulDepot">
+		delete
+		from depot
+		where depotId in
+		<foreach collection="depotIds" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+</mapper>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hotel.mapper.FoodMapper">
+	
+	<select id="getFoodByCond" resultMap="com.example.hotel.mapper.CommonMapper.foodMap">
+		select *
+		from food f
+		<where>
+			<if test="foodId != null ">
+				f.foodId=#{foodId}
+			</if>
+			<if test="foodName!=null">
+				and f.foodName=#{foodName}
+			</if>
+		</where>
+		order by foodId
+	</select>
+	
+	
+	<insert id="addFood" useGeneratedKeys="true" keyProperty="foodId">
+		insert into food(foodName, price, image)
+		values (#{foodName}, #{price}, #{image})
+	</insert>
+	
+	<update id="updateFood">
+		update food
+		<set>
+			<if test="foodName!=null">
+				foodName=#{foodName},
+			</if>
+			<if test="price!=null">
+				price=#{price},
+			</if>
+			<if test="image!=null">
+				image=#{image},
+			</if>
+		</set>
+		where foodId = #{foodId}
+	</update>
+	
+	<delete id="delMulFood">
+		delete
+		from food
+		where food.foodId in
+		<foreach collection="foodIds" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+</mapper>

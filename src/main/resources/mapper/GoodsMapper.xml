@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hotel.mapper.GoodsMapper">
+	
+	<select id="getGoodsByCond" resultMap="com.example.hotel.mapper.CommonMapper.goodsMap">
+		select *
+		from (SELECT g.goodsId, g.goodsName, COALESCE(SUM(i.inventory), 0) inventory
+		from goods g
+		LEFT JOIN inventory i on g.goodsId = i.goodsId
+		<where>
+			<if test="goodsId!=null">
+				g.goodsId=#{goodsId}
+			</if>
+			<if test="goodsName!=null">
+				and g.goodsName like concat('%', #{goodsName},'%')
+			</if>
+		</where>
+		GROUP BY g.goodsId, g.goodsName) tmp
+		order by goodsId
+	</select>
+	
+	
+	<insert id="addGoods" useGeneratedKeys="true" keyProperty="goodsId">
+		insert into goods(goodsName)
+		values (#{goodsName})
+	</insert>
+	
+	<update id="updateGoods">
+		update goods
+		<set>
+			<if test="goodsName!=null">
+				goodsName=#{goodsName}
+			</if>
+		</set>
+		where goodsId = #{goodsId}
+	</update>
+	
+	<delete id="delMulGoods">
+		delete
+		from goods
+		where goodsId in
+		<foreach collection="goodsIds" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+</mapper>

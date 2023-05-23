@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hotel.mapper.RoomMapper">
+	
+	<select id="getRoomByCond" resultMap="com.example.hotel.mapper.CommonMapper.roomMap">
+		select *
+		from room r left outer join roomType rT on rT.roomTypeId = r.roomTypeId
+		<where>
+			<if test="roomId != null ">
+				r.roomId=#{roomId}
+			</if>
+			<if test="roomTypeId!=null">
+				and r.roomTypeId=#{roomTypeId}
+			</if>
+			<if test="roomTypeName!=null">
+				and rT.roomTypeName=#{roomTypeName}
+			</if>
+			<if test="roomStatus!=null">
+				and roomStatus=#{roomStatus}
+			</if>
+		</where>
+		order by roomId
+	</select>
+	
+	
+	<insert id="addRoom" useGeneratedKeys="true" keyProperty="roomId">
+		insert into room(roomTypeId, roomImage, remark)
+		values (#{roomTypeId}, #{roomImage}, #{remark})
+	</insert>
+	
+	<update id="updateRoom">
+		update room
+		<set>
+			<if test="roomType!=null">
+				roomTypeId=#{roomType.roomTypeId},
+			</if>
+			<if test="image!=null">
+				image=#{image},
+			</if>
+			<if test="roomStatus!=null">
+				roomStatus=#{roomStatus},
+			</if>
+			<if test="remark!=null">
+				remark=#{remark}
+			</if>
+		</set>
+		where roomId = #{roomId}
+	</update>
+	
+	<delete id="delMulRoom">
+		delete
+		from room
+		where room.roomId in
+		<foreach collection="roomIds" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+</mapper>

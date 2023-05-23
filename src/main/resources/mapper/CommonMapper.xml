@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hotel.mapper.CommonMapper">
+	
+	<resultMap id="customerMap" type="Customer">
+		<id property="customerId" column="customerId"/>
+		<result property="customerName" column="customerName"/>
+		<result property="customerSex" column="customerSex"/>
+		<result property="customerAge" column="customerAge"/>
+		<result property="customerPhone" column="customerPhone"/>
+		<result property="avatar" column="avatar"/>
+		<result property="rank" column="rank"/>
+		<result property="password" column="password"/>
+	</resultMap>
+	
+	<resultMap id="deptMap" type="Dept">
+		<id property="deptId" column="deptId"/>
+		<result property="deptName" column="deptName"/>
+		<result property="empNums" column="empNums"/>
+	</resultMap>
+	
+	<resultMap id="empMap" type="Emp">
+		<id property="empId" column="empId"/>
+		<result property="empName" column="empName"/>
+		<result property="empSex" column="empSex"/>
+		<result property="empAge" column="empAge"/>
+		<result property="empPhone" column="empPhone"/>
+		<result property="isAdmin" column="isAdmin"/>
+		<result property="password" column="password"/>
+		<result property="avatar" column="avatar"/>
+		<result property="salary" column="salary"/>
+		<association property="dept" resultMap="deptMap"/>
+	</resultMap>
+	
+	<resultMap id="goodsMap" type="Goods">
+		<id property="goodsId" column="goodsId"/>
+		<result property="goodsName" column="goodsName"/>
+		<result property="inventory" column="inventory"/>
+	</resultMap>
+	
+	<resultMap id="tableMap" type="Table">
+		<id property="tableId" column="tableId"/>
+		<result property="seats" column="seats"/>
+		<result property="status" column="status"/>
+	</resultMap>
+	
+	<resultMap id="depotMap" type="Depot">
+		<id property="depotId" column="depotId"/>
+		<result property="depotAddress" column="depotAddress"/>
+	</resultMap>
+	
+	<resultMap id="roomTypeMap" type="RoomType">
+		<id property="roomTypeId" column="roomTypeId"/>
+		<result property="roomTypeName" column="roomTypeName"/>
+		<result property="residentNums" column="residentNums"/>
+		<result property="bedNums" column="bedNums"/>
+		<result property="price" column="price"/>
+		<result property="roomNums" column="roomNums"/>
+	</resultMap>
+	
+	<resultMap id="roomMap" type="Room">
+		<id property="roomId" column="roomId"/>
+		<result property="image" column="image"/>
+		<result property="roomStatus" column="roomStatus"/>
+		<result property="remark" column="remark"/>
+		<association property="roomType" resultMap="roomTypeMap"/>
+	</resultMap>
+	
+	<resultMap id="foodMap" type="food">
+		<id property="foodId" column="foodId"/>
+		<result property="foodName" column="foodName"/>
+		<result property="price" column="price"/>
+		<result property="image" column="image"/>
+	</resultMap>
+</mapper>

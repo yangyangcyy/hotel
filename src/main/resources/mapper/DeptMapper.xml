@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hotel.mapper.DeptMapper">
+	
+	<select id="getDeptByCond" resultMap="com.example.hotel.mapper.CommonMapper.deptMap">
+		select *
+		from (SELECT dept.deptId, dept.deptName, COUNT(emp.empId) empNums
+		FROM dept
+		LEFT JOIN emp on (dept.deptId = emp.deptId)
+		<where>
+			<if test="deptId!=null">
+				dept.deptId=#{deptId}
+			</if>
+			<if test="deptName!=null">
+				and dept.deptName like concat('%', #{deptName},'%')
+			</if>
+		</where>
+		GROUP BY dept.deptId, dept.deptName) tmp
+		order by deptId
+	</select>
+	
+	
+	<insert id="addDept" useGeneratedKeys="true" keyProperty="deptId">
+		insert into dept(deptName)
+		values (#{deptName})
+	</insert>
+	
+	<update id="updateDept">
+		update dept
+		<set>
+			<if test="deptName!=null">
+				deptName=#{deptName}
+			</if>
+		</set>
+		where deptId = #{deptId}
+	</update>
+	
+	<delete id="delMulDept">
+		delete
+		from dept
+		where deptId in
+		<foreach collection="deptIds" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+</mapper>

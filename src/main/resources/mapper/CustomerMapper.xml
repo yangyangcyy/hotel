@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hotel.mapper.CustomerMapper">
+	<select id="getCustomerByCond" resultType="Customer">
+		select *
+		from customer c
+		<where>
+			<if test="customerId!=null">
+				customerId like concat({'%',customerId},'%')
+			</if>
+			<if test="customerName!=null">
+				and customerName like concat('%',#{customerName},'%')
+			</if>
+			<if test="rank!=null">
+				and rank=#{rank}
+			</if>
+		</where>
+		order by customerId
+	</select>
+	
+	<insert id="addCustomer">
+		insert into customer(customerId, customerName, customerSex, customerAge, customerPhone, avatar, rank, password)
+		values (#{customerId}, #{customerName}, #{customerSex}, #{customerAge}, #{customerPhone}, #{avatar}, #{rank},
+		        #{password})
+	</insert>
+	
+	<update id="updateCustomer">
+		update customer
+		<set>
+			<if test="customerName!=null">
+				customerName=#{customerName},
+			</if>
+			<if test="customerSex!=null">
+				customerSex=#{customerSex},
+			</if>
+			<if test="customerAge!=null">
+				customerAge=#{customerAge},
+			</if>
+			<if test="customerPhone!=null">
+				customerPhone=#{customerPhone},
+			</if>
+			<if test="avatar!=null">
+				avatar=#{avatar},
+			</if>
+			<if test="rank!=null">
+				rank=#{rank},
+			</if>
+			<if test="password!=null">
+				password=#{password}
+			</if>
+		</set>
+		where customerId=#{customerId}
+	</update>
+	
+	<delete id="delMulCustomer">
+		delete
+		from customer
+		where customerId in
+		<foreach collection="customerIds" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+</mapper>
