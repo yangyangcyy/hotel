@@ -23,14 +23,17 @@
 	</select>
 	
 	
-	<insert id="addRoom" useGeneratedKeys="true" keyProperty="roomId">
-		insert into room(roomTypeId, roomImage, remark)
-		values (#{roomTypeId}, #{roomImage}, #{remark})
+	<insert id="addRoom">
+		insert into room(roomId, roomTypeId, image, remark)
+		values (#{roomId}, #{roomType.roomTypeId}, #{image}, #{remark})
 	</insert>
 	
 	<update id="updateRoom">
 		update room
 		<set>
+			<if test="roomId!=null">
+				roomId=#{roomId},
+			</if>
 			<if test="roomType!=null">
 				roomTypeId=#{roomType.roomTypeId},
 			</if>

@@ -27,6 +27,9 @@
 	<update id="updateCustomer">
 		update customer
 		<set>
+			<if test="customerId!=null">
+				customerId=#{customerId},
+			</if>
 			<if test="customerName!=null">
 				customerName=#{customerName},
 			</if>

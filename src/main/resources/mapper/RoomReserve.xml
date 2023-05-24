@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hotel.mapper.RoomReserveMapper">
+	
+	<select id="getRoomReserveByCond" resultMap="com.example.hotel.mapper.CommonMapper.roomReserveMap">
+		select *
+		from roomReserve r
+		left join room r2 on r2.roomId = r.roomId
+		left outer join roomType rT on rT.roomTypeId = r2.roomTypeId
+		left join customer c on c.customerId = r.customerId
+		<where>
+			<if test="reserveId!=null and reserveId!=''">
+				reserveId=#{reserveId}
+			</if>
+			<if test="customerId!=null and customerId!=''">
+				and c.customerId=#{customerId}
+			</if>
+			<if test="roomId!=null and roomId!=''">
+				and r2.roomId=#{roomId}
+			</if>
+			<if test="status!=null and status!=''">
+				and r.status=#{status}
+			</if>
+		</where>
+		order by r.reserveId
+	</select>
+	
+	<insert id="addRoomReserve">
+		insert into roomReserve(customerId, roomId, reserveCheckinDate, reserveCheckoutDate)
+		values (#{customer.customerId}, #{room.roomId}, #{reserveCheckinDate}, #{reserveCheckoutDate})
+	</insert>
+	
+	<update id="updateRoomReserve">
+		update roomReserve
+		<set>
+			<if test="reserveCheckinDate!=null">
+				reserveCheckinDate=#{reserveCheckinDate},
+			</if>
+			<if test="reserveCheckoutDate!=null">
+				reserveCheckoutDate=#{reserveCheckoutDate}
+			</if>
+		</set>
+	</update>
+</mapper>

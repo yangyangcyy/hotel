@@ -2,9 +2,9 @@ package com.example.hotel.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.hotel.Util.UploadUtil;
-import com.example.hotel.entity.Room;
+import com.example.hotel.entity.Food;
 import com.example.hotel.response.Result;
-import com.example.hotel.service.RoomService;
+import com.example.hotel.service.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,54 +14,54 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
-@RequestMapping ("/room")
-public class RoomController {
+@RequestMapping ("/food")
+public class FoodController {
 	@Autowired
-	RoomService roomService;
+	FoodService foodService;
 	
 	@GetMapping ("/cond")
-	public Result getRoomByCond (@RequestParam (defaultValue = "-1") Integer current , @RequestParam (defaultValue = "-1") Integer size , Integer roomId , String roomTypeId , String roomTypeName , String roomStatus) {
+	public Result getFoodByCond (@RequestParam (defaultValue = "-1") Integer current , @RequestParam (defaultValue = "-1") Integer size , Integer foodId , String foodName) {
 		Page page = new Page<> (current , size);
-		Page<Room> roomPage = roomService.getRoomByCond (page , roomId , roomTypeId , roomTypeName , roomStatus);
-		return Result.ok ().data ("items" , roomPage);
+		Page<Food> foodPage = foodService.getFoodByCond (page , foodId , foodName);
+		return Result.ok ().data ("items" , foodPage);
 	}
 	
 	@PostMapping ("/add")
-	public Result addRoom (Room room , MultipartFile file) // MultipartFile实现文件上传
+	public Result addFood (Food food , MultipartFile file) // MultipartFile实现文件上传
 	{
-		// 设置头像
+		// 设置图片
 		if (! Objects.isNull (file)) {
 			String url = new UploadUtil ().uploadFile (file);
-			room.setImage (url);
+			food.setImage (url);
 		}
-		if (roomService.addRoom (room) > 0) {
+		if (foodService.addFood (food) > 0) {
 			return Result.ok ();
 		}
 		return Result.error ();
 	}
 	
 	@PutMapping ("/update")
-	public Result updateRoom (Room room , MultipartFile file) {
+	public Result updateFood (Food food , MultipartFile file) {
 		// 设置头像
 		if (! Objects.isNull (file)) {
 			String url = new UploadUtil ().uploadFile (file);
-			room.setImage (url);
-			String oldFile = roomService.selectById (room.getRoomId ()).getImage ();
+			food.setImage (url);
+			String oldFile = foodService.selectById (food.getFoodId ()).getImage ();
 			UploadUtil.deleteFile (oldFile);
 		}
-		if (roomService.updateRoom (room) > 0) {
+		if (foodService.updateFood (food) > 0) {
 			return Result.ok ();
 		}
 		return Result.error ();
 	}
 	
 	@DeleteMapping ("/deleteMul")
-	public Result deleteMulRoom (@RequestBody List<Integer> roomIds) {
+	public Result deleteMulFood (@RequestBody List<Integer> foodIds) {
 		List<String> files = new ArrayList<> ();
-		for (Integer id : roomIds) {
-			files.add (roomService.selectById (id).getImage ());
+		for (Integer id : foodIds) {
+			files.add (foodService.selectById (id).getImage ());
 		}
-		roomService.delMulRoom (roomIds);
+		foodService.delMulFood (foodIds);
 		for (String file : files) {
 			UploadUtil.deleteFile (file);
 		}

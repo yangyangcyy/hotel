@@ -10,7 +10,7 @@
 				f.foodId=#{foodId}
 			</if>
 			<if test="foodName!=null">
-				and f.foodName=#{foodName}
+				and f.foodName like concat('%',#{foodName},'%')
 			</if>
 		</where>
 		order by foodId

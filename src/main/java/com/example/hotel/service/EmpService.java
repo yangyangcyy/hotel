@@ -32,4 +32,12 @@ public class EmpService {
 	public Emp selectById (Integer empId) {
 		return empMapper.selectById (empId);
 	}
+	
+	public int updateAvatar (Integer empId , String avatar) {
+		return empMapper.updateAvatar (empId , avatar);
+	}
+	
+	public int updatePwd (Integer empId , String oldpwd , String newpwd) {
+		return empMapper.updatePwd (empId , oldpwd , newpwd);
+	}
 }

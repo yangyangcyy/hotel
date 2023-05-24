@@ -72,4 +72,15 @@
 		<result property="price" column="price"/>
 		<result property="image" column="image"/>
 	</resultMap>
+	
+	<resultMap id="roomReserveMap" type="RoomReserve">
+		<id property="reserveId" column="reserveId"/>
+		<result property="orderTime" column="orderTime"/>
+		<result property="reserveCheckinDate" column="reserveCheckinDate"/>
+		<result property="reserveCheckoutDate" column="reserveCheckoutDate"/>
+		<result property="roomRate" column="roomRate"/>
+		<result property="status" column="roomStatus"/>
+		<association property="customer" resultMap="customerMap"/>
+		<association property="room" resultMap="roomMap"/>
+	</resultMap>
 </mapper>

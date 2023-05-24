@@ -70,7 +70,7 @@ public class UploadUtil {
 	public static boolean deleteFile (String file) {
 		File delFile = new File (fileSavePath + file);
 		if (delFile.isFile () && delFile.exists ()) {
-			System.out.println (delFile);
+			System.out.println ("删除文件 " + delFile);
 			delFile.delete ();
 			return true;
 		}
