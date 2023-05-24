@@ -5,13 +5,13 @@
 		select *
 		from customer c
 		<where>
-			<if test="customerId!=null">
+			<if test="customerId!=null and customerId!=''">
 				customerId like concat({'%',customerId},'%')
 			</if>
-			<if test="customerName!=null">
+			<if test="customerName!=null and customerName!=''">
 				and customerName like concat('%',#{customerName},'%')
 			</if>
-			<if test="rank!=null">
+			<if test="rank!=null and rank!=''">
 				and rank=#{rank}
 			</if>
 		</where>

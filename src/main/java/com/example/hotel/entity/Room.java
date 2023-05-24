@@ -11,6 +11,6 @@ public class Room {
 	@TableField (exist = false)
 	private RoomType roomType;
 	private String image;
-	private String roomStatus;
+	private String status;
 	private String remark;
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface RoomMapper extends BaseMapper<Room> {
-	Page<Room> getRoomByCond (Page page , Integer roomId , String roomTypeId , String roomTypeName , String roomStatus);
+	Page<Room> getRoomByCond (Page page , Integer roomId , String roomTypeId , String roomTypeName , String status);
 	
 	int addRoom (Room room);
 	

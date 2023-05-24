@@ -23,7 +23,7 @@ public class GoodsController {
 	}
 	
 	@PostMapping ("/add")
-	public Result addGoods (Goods goods) {
+	public Result addGoods (@RequestBody Goods goods) {
 		if (goodsService.addGoods (goods) > 0) {
 			return Result.ok ();
 		}
@@ -31,7 +31,7 @@ public class GoodsController {
 	}
 	
 	@PutMapping ("/update")
-	public Result updateGoods (Goods goods) {
+	public Result updateGoods (@RequestBody Goods goods) {
 		if (goodsService.updateGoods (goods) > 0) {
 			return Result.ok ();
 		}

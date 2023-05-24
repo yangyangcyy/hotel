@@ -6,17 +6,17 @@
 		select *
 		from room r left outer join roomType rT on rT.roomTypeId = r.roomTypeId
 		<where>
-			<if test="roomId != null ">
+			<if test="roomId != null and roomId!=''">
 				r.roomId=#{roomId}
 			</if>
-			<if test="roomTypeId!=null">
+			<if test="roomTypeId!=null and roomTypeId!=''">
 				and r.roomTypeId=#{roomTypeId}
 			</if>
-			<if test="roomTypeName!=null">
+			<if test="roomTypeName!=null and roomTypeName!=''">
 				and rT.roomTypeName=#{roomTypeName}
 			</if>
-			<if test="roomStatus!=null">
-				and roomStatus=#{roomStatus}
+			<if test="status!=null and status!=''">
+				and roomStatus=#{status}
 			</if>
 		</where>
 		order by roomId
@@ -40,8 +40,8 @@
 			<if test="image!=null">
 				image=#{image},
 			</if>
-			<if test="roomStatus!=null">
-				roomStatus=#{roomStatus},
+			<if test="status!=null">
+				roomStatus=#{status},
 			</if>
 			<if test="remark!=null">
 				remark=#{remark}

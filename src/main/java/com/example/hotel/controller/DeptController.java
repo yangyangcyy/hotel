@@ -23,7 +23,7 @@ public class DeptController {
 	}
 	
 	@PostMapping ("/add")
-	public Result addDept (Dept dept) {
+	public Result addDept (@RequestBody Dept dept) {
 		if (deptService.addDept (dept) > 0) {
 			return Result.ok ();
 		}
@@ -31,7 +31,7 @@ public class DeptController {
 	}
 	
 	@PutMapping ("/update")
-	public Result updateDept (Dept dept) {
+	public Result updateDept (@RequestBody Dept dept) {
 		if (deptService.updateDept (dept) > 0) {
 			return Result.ok ();
 		}

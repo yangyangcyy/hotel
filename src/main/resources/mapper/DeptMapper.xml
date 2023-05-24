@@ -8,10 +8,10 @@
 		FROM dept
 		LEFT JOIN emp on (dept.deptId = emp.deptId)
 		<where>
-			<if test="deptId!=null">
+			<if test="deptId!=null and deptId!=''">
 				dept.deptId=#{deptId}
 			</if>
-			<if test="deptName!=null">
+			<if test="deptName!=null and deptName!=''">
 				and dept.deptName like concat('%', #{deptName},'%')
 			</if>
 		</where>

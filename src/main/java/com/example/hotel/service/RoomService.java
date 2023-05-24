@@ -13,8 +13,8 @@ public class RoomService {
 	@Autowired
 	RoomMapper roomMapper;
 	
-	public Page<Room> getRoomByCond (Page page , Integer roomId , String roomTypeId , String roomTypeName , String roomStatus) {
-		return roomMapper.getRoomByCond (page , roomId , roomTypeId , roomTypeName , roomStatus);
+	public Page<Room> getRoomByCond (Page page , Integer roomId , String roomTypeId , String roomTypeName , String status) {
+		return roomMapper.getRoomByCond (page , roomId , roomTypeId , roomTypeName , status);
 	}
 	
 	public int addRoom (Room room) {

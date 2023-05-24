@@ -23,7 +23,7 @@ public class DepotController {
 	}
 	
 	@PostMapping ("/add")
-	public Result addDepot (Depot depot) {
+	public Result addDepot (@RequestBody Depot depot) {
 		if (depotService.addDepot (depot) > 0) {
 			return Result.ok ();
 		}
@@ -31,7 +31,7 @@ public class DepotController {
 	}
 	
 	@PutMapping ("/update")
-	public Result updateDepot (Depot depot) {
+	public Result updateDepot (@RequestBody Depot depot) {
 		if (depotService.updateDepot (depot) > 0) {
 			return Result.ok ();
 		}

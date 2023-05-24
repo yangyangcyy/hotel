@@ -23,7 +23,7 @@ public class RoomTypeController {
 	}
 	
 	@PostMapping ("/add")
-	public Result addRoomType (RoomType roomType) {
+	public Result addRoomType (@RequestBody RoomType roomType) {
 		if (roomTypeService.addRoomType (roomType) > 0) {
 			return Result.ok ();
 		}
@@ -31,7 +31,7 @@ public class RoomTypeController {
 	}
 	
 	@PutMapping ("/update")
-	public Result updateRoomType (RoomType roomType) {
+	public Result updateRoomType (@RequestBody RoomType roomType) {
 		if (roomTypeService.updateRoomType (roomType) > 0) {
 			return Result.ok ();
 		}

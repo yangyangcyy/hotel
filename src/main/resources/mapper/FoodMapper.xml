@@ -6,10 +6,10 @@
 		select *
 		from food f
 		<where>
-			<if test="foodId != null ">
+			<if test="foodId != null and foodId!='' ">
 				f.foodId=#{foodId}
 			</if>
-			<if test="foodName!=null">
+			<if test="foodName!=null and foodName!=''">
 				and f.foodName like concat('%',#{foodName},'%')
 			</if>
 		</where>

@@ -6,19 +6,19 @@
 		select *
 		from emp emp left join dept on emp.deptId=dept.deptId
 		<where>
-			<if test="empId != null ">
+			<if test="empId != null and empId!=''">
 				empId=#{empId}
 			</if>
-			<if test="empName!=null">
+			<if test="empName!=null and empName!=''">
 				and empName like concat('%',#{empName},'%')
 			</if>
-			<if test="deptId!=null">
+			<if test="deptId!=null and deptId!=''">
 				and emp.deptId=#{deptId}
 			</if>
-			<if test="deptName!=null">
+			<if test="deptName!=null and deptName!=''">
 				and dept.deptName=#{deptName}
 			</if>
-			<if test="isAdmin!=null">
+			<if test="isAdmin!=null and isAdmin!=''">
 				and isAdmin=#{isAdmin}
 			</if>
 		</where>

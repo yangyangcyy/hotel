@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hotel.mapper.CheckoutMapper">
+	
+	<select id="getCheckoutByCond" resultMap="com.example.hotel.mapper.CommonMapper.checkoutMap">
+		select *
+		from checkout c2
+		left join room r2 on r2.roomId = c2.roomId
+		left outer join roomType rT on rT.roomTypeId = r2.roomTypeId
+		left outer join emp e on e.empId = c2.empId
+		left join customer c on c.customerId = c2.customerId
+		<where>
+			<if test="checkinId!=null and checkinId!=''">
+				c2.checkinId=#{checkinId}
+			</if>
+			<if test="customerId!=null and customerId!=''">
+				and c.customerId=#{customerId}
+			</if>
+			<if test="roomId!=null and roomId!=''">
+				and r2.roomId=#{roomId}
+			</if>
+			<if test="empId!=null and empId!=''">
+				and e.empId=#{empId}
+			</if>
+		</where>
+		order by c2.checkinId
+	</select>
+	
+	<insert id="addCheckout">
+		insert into checkout(checkinId, customerId, roomId, empId, checkinDate, checkoutDate)
+		values (#{checkinId}, #{customer.customerId}, #{room.roomId}, #{emp.empId}, #{checkinDate}, #{checkoutDate})
+	</insert>
+	
+	<update id="updateCheckout">
+		update checkout
+		<set>
+			<if test="comment!=null">
+				comment=#{comment}
+			</if>
+		</set>
+		where checkinId=#{checkinId};
+	</update>
+</mapper>

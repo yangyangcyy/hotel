@@ -6,16 +6,16 @@
 		select *
 		FROM diningTable dT
 		<where>
-			<if test="tableId!=null">
+			<if test="tableId!=null and tableId!=''">
 				tableId=#{tableId}
 			</if>
-			<if test="minSeats!=null">
+			<if test="minSeats!=null and minSeats!=''">
 				and seats &gt;=#{minSeats}
 			</if>
-			<if test="maxSeats!=null">
+			<if test="maxSeats!=null and maxSeats!=''">
 				and seats &lt;=#{maxSeats}
 			</if>
-			<if test="status!=null">
+			<if test="status!=null and status!=''">
 				and status=#{status}
 			</if>
 		</where>

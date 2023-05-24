@@ -8,10 +8,10 @@
 		from goods g
 		LEFT JOIN inventory i on g.goodsId = i.goodsId
 		<where>
-			<if test="goodsId!=null">
+			<if test="goodsId!=null and goodsId!=''">
 				g.goodsId=#{goodsId}
 			</if>
-			<if test="goodsName!=null">
+			<if test="goodsName!=null and goodsName!=''">
 				and g.goodsName like concat('%', #{goodsName},'%')
 			</if>
 		</where>

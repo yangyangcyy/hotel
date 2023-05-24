@@ -61,7 +61,7 @@
 	<resultMap id="roomMap" type="Room">
 		<id property="roomId" column="roomId"/>
 		<result property="image" column="image"/>
-		<result property="roomStatus" column="roomStatus"/>
+		<result property="status" column="roomStatus"/>
 		<result property="remark" column="remark"/>
 		<association property="roomType" resultMap="roomTypeMap"/>
 	</resultMap>
@@ -82,5 +82,28 @@
 		<result property="status" column="roomStatus"/>
 		<association property="customer" resultMap="customerMap"/>
 		<association property="room" resultMap="roomMap"/>
+	</resultMap>
+	
+	<resultMap id="checkinMap" type="Checkin">
+		<id property="checkinId" column="checkinId"/>
+		<result property="checkinDate" column="checkinDate"/>
+		<result property="checkoutDate" column="checkoutDate"/>
+		<result property="roomRate" column="roomRate"/>
+		<result property="status" column="status"/>
+		<association property="customer" resultMap="customerMap"/>
+		<association property="room" resultMap="roomMap"/>
+		<association property="emp" resultMap="empMap"/>
+	</resultMap>
+	
+	<resultMap id="checkoutMap" type="Checkout">
+		<id property="checkinId" column="checkinId"/>
+		<result property="checkinDate" column="checkinDate"/>
+		<result property="checkoutDate" column="checkoutDate"/>
+		<result property="actualCheckoutDate" column="actualCheckoutDate"/>
+		<result property="roomRate" column="roomRate"/>
+		<result property="comment" column="comment"/>
+		<association property="customer" resultMap="customerMap"/>
+		<association property="room" resultMap="roomMap"/>
+		<association property="emp" resultMap="empMap"/>
 	</resultMap>
 </mapper>

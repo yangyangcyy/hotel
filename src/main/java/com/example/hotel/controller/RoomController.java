@@ -20,16 +20,16 @@ public class RoomController {
 	RoomService roomService;
 	
 	@GetMapping ("/cond")
-	public Result getRoomByCond (@RequestParam (defaultValue = "-1") Integer current , @RequestParam (defaultValue = "-1") Integer size , Integer roomId , String roomTypeId , String roomTypeName , String roomStatus) {
+	public Result getRoomByCond (@RequestParam (defaultValue = "-1") Integer current , @RequestParam (defaultValue = "-1") Integer size , Integer roomId , String roomTypeId , String roomTypeName , String status) {
 		Page page = new Page<> (current , size);
-		Page<Room> roomPage = roomService.getRoomByCond (page , roomId , roomTypeId , roomTypeName , roomStatus);
+		Page<Room> roomPage = roomService.getRoomByCond (page , roomId , roomTypeId , roomTypeName , status);
 		return Result.ok ().data ("items" , roomPage);
 	}
 	
 	@PostMapping ("/add")
 	public Result addRoom (Room room , MultipartFile file) // MultipartFile实现文件上传
 	{
-		// 设置头像
+		// 设置图片
 		if (! Objects.isNull (file)) {
 			String url = new UploadUtil ().uploadFile (file);
 			room.setImage (url);

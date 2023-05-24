@@ -6,10 +6,10 @@
 		SELECT *
 		from depot d
 		<where>
-			<if test="depotId!=null">
+			<if test="depotId!=null and depotId!=''">
 				d.depotId=#{depotId}
 			</if>
-			<if test="depotAddress!=null">
+			<if test="depotAddress!=null and depotAddress!=''">
 				and d.depotAddress like concat('%', #{depotAddress},'%')
 			</if>
 		</where>

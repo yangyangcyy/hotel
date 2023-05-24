@@ -23,7 +23,7 @@ public class TableController {
 	}
 	
 	@PostMapping ("/add")
-	public Result addTable (Table table) {
+	public Result addTable (@RequestBody Table table) {
 		if (tableService.addTable (table) > 0) {
 			return Result.ok ();
 		}
@@ -31,7 +31,7 @@ public class TableController {
 	}
 	
 	@PutMapping ("/update")
-	public Result updateTable (Table table) {
+	public Result updateTable (@RequestBody Table table) {
 		if (tableService.updateTable (table) > 0) {
 			return Result.ok ();
 		}

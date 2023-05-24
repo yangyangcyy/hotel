@@ -9,18 +9,21 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class RoomReserve {
+public class Checkout {
 	@TableId (type = IdType.AUTO)
-	private Integer reserveId;
+	private String checkinId;
 	@TableField (exist = false)
 	private Customer customer;
 	@TableField (exist = false)
 	private Room room;
-	private Date orderTime;
+	@TableField (exist = false)
+	private Emp emp;
 	@JsonFormat (pattern = "yyyy-MM-dd", timezone = "GMT+8")
-	private Date reserveCheckinDate;
+	private Date checkinDate;
 	@JsonFormat (pattern = "yyyy-MM-dd", timezone = "GMT+8")
-	private Date reserveCheckoutDate;
+	private Date checkoutDate;
+	@JsonFormat (pattern = "yyyy-MM-dd", timezone = "GMT+8")
+	private Date actualCheckoutDate;
 	private Double roomRate;
-	private String status;
+	private String comment;
 }

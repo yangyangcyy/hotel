@@ -9,10 +9,10 @@
 		FROM roomType
 		LEFT JOIN room on (roomType.roomTypeId = room.roomTypeId)
 		<where>
-			<if test="roomTypeId!=null">
+			<if test="roomTypeId!=null and roomTypeId!=''">
 				roomType.roomTypeId=#{roomTypeId}
 			</if>
-			<if test="roomTypeName!=null">
+			<if test="roomTypeName!=null and roomTypeName!=''">
 				and roomType.roomTypeName like concat('%', #{roomTypeName},'%')
 			</if>
 		</where>
