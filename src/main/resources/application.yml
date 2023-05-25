@@ -22,10 +22,10 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss #设置全局的日期格式为年月日时分秒
     time-zone: GMT+8 #世界标准时间,为了方式时差,需要+8小时
   mvc:
-    # 前端参数格式化
-    #    format:
-    #      # String格式化日期
-    #      date: yyyy-MM-dd HH:mm:ss
+    #    前端参数格式化
+    format:
+      # String格式化日期
+      date: yyyy-MM-dd HH:mm:ss
     pathmatch:
       matching-strategy: ant_path_matcher
 

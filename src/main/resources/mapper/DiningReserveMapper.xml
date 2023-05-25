@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hotel.mapper.DiningReserveMapper">
+	<select id="getDiningReserveByCond" resultMap="com.example.hotel.mapper.CommonMapper.diningReserveMap">
+		select *
+		from diningReserve dR
+		left join customer c on c.customerId = dR.customerId
+		left join diningTable dT on dT.tableId = dR.tableId
+		<where>
+			<if test="reserveId!=null and reserveId!=''">
+				dR.reserveId=#{reserveId}
+			</if>
+			<if test="customerId!=null and customerId!=''">
+				and c.customerId=#{customerId}
+			</if>
+			<if test="tableId!=null and tableId!=''">
+				and dT.tableId=#{tableId}
+			</if>
+			<if test="status!=null and status!=''">
+				and dR.status=#{status}
+			</if>
+		</where>
+		order by dR.reserveId
+	</select>
+	
+	<insert id="addDiningReserve">
+		insert into diningReserve (customerId, tableId, reserveDiningTime)
+		values (#{customer.customerId}, #{table.tableId}, #{reserveDiningTime});
+	</insert>
+	
+	<update id="updateDiningReserve">
+		update diningReserve
+		set status=#{status}
+		where reserveId = #{reserveId}
+	</update>
+	
+	<select id="selectId" resultType="Integer">
+		select IDENT_CURRENT('diningReserve')
+	</select>
+</mapper>

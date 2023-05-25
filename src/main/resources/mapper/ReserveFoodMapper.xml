@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hotel.mapper.ReserveFoodMapper">
+	<select id="getReserveFoodByCond" resultMap="com.example.hotel.mapper.CommonMapper.reserveFoodMap">
+		select *
+		from reserveFood rF
+		left join diningReserve dR on dR.reserveId = rF.reserveId
+		left join diningTable dT on dT.tableId = dR.tableId
+		left join customer c on c.customerId = dR.customerId
+		left join food f on f.foodId = rF.foodId
+		<where>
+			<if test="reserveId!=null and reserveId!=''">
+				rF.reserveId=#{reserveId}
+			</if>
+			<if test="foodId!=null and foodId!=''">
+				and f.foodId=#{foodId}
+			</if>
+		</where>
+		order by rF.reserveId,f.foodId
+	</select>
+	
+	<select id="existsReserveFood" resultType="java.lang.Integer">
+		select count(*)
+		from reserveFood rF
+		where rF.reserveId = #{diningReserve.reserveId}
+		  and rF.foodId = #{food.foodId}
+	</select>
+	
+	<insert id="addMulReserveFood">
+		insert into reserveFood(reserveId, foodId, quantity)
+		values
+		<foreach collection="reserveFoods" index="index" item="item" separator=",">
+			(#{item.diningReserve.reserveId}, #{item.food.foodId},#{item.quantity})
+		</foreach>
+	</insert>
+	
+	<update id="updateMulReserveFood">
+		<foreach collection="reserveFoods" index="index" item="item" separator=",">
+			update reserveFood
+			<set>
+				<if test="item.quantity != null">
+					quantity = #{item.quantity},
+				</if>
+			</set>
+			where reserveId=#{item.diningReserve.reserveId} and foodId=#{item.food.foodId}
+		</foreach>
+	</update>
+</mapper>

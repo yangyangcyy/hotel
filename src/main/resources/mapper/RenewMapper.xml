@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hotel.mapper.RenewMapper">
+	
+	<select id="getRenewByCond" resultMap="com.example.hotel.mapper.CommonMapper.renewMap">
+		select *
+		from (select r2.*,c.customerName,rT.roomTypeName,rT.price,e.empName,
+		DATEADD(day, r2.renewDays, r2.checkoutDate) nowCheckoutDate
+		from renew r2
+		left join customer c on c.customerId = r2.customerId
+		left outer join room r3 on r3.roomId = r2.roomId
+		left outer join roomType rT on rT.roomTypeId = r3.roomTypeId
+		left join emp e on e.empId = r2.empId
+		<where>
+			<if test="checkinId!=null and checkinId!=''">
+				r2.checkinId=#{checkinId}
+			</if>
+		</where>
+		group by
+		r2.id,
+		r2.checkinId,
+		r2.orderTime,
+		r2.customerId,
+		r2.roomId,
+		r2.empId,
+		r2.checkinDate,
+		r2.checkoutDate,
+		r2.renewDays,
+		c.customerName,rT.roomTypeName,rT.price,e.empName) tmp
+		order by checkinId
+	</select>
+	
+	<insert id="addRenew">
+		insert into renew(checkinId, customerId, roomId, empId, checkinDate, checkoutDate, renewDays)
+		values (#{checkinId}, #{customer.customerId}, #{room.roomId}, #{emp.empId}, #{checkinDate}, #{checkoutDate},
+		        #{renewDays})
+	</insert>
+</mapper>

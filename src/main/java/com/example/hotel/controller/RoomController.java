@@ -20,9 +20,9 @@ public class RoomController {
 	RoomService roomService;
 	
 	@GetMapping ("/cond")
-	public Result getRoomByCond (@RequestParam (defaultValue = "-1") Integer current , @RequestParam (defaultValue = "-1") Integer size , Integer roomId , String roomTypeId , String roomTypeName , String status) {
+	public Result getRoomByCond (@RequestParam (defaultValue = "-1") Integer current , @RequestParam (defaultValue = "-1") Integer size , Integer roomId , String roomTypeId , String status) {
 		Page page = new Page<> (current , size);
-		Page<Room> roomPage = roomService.getRoomByCond (page , roomId , roomTypeId , roomTypeName , status);
+		Page<Room> roomPage = roomService.getRoomByCond (page , roomId , roomTypeId , status);
 		return Result.ok ().data ("items" , roomPage);
 	}
 	

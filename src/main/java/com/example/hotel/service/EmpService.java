@@ -13,8 +13,8 @@ public class EmpService {
 	@Autowired
 	EmpMapper empMapper;
 	
-	public Page<Emp> getEmpByCond (Page page , Integer empId , String empName , Integer deptId , String deptName , String isAdmin) {
-		return empMapper.getEmpByCond (page , empId , empName , deptId , deptName , isAdmin);
+	public Page<Emp> getEmpByCond (Page page , Integer empId , String empName , Integer deptId , String isAdmin) {
+		return empMapper.getEmpByCond (page , empId , empName , deptId , isAdmin);
 	}
 	
 	public int addEmp (Emp emp) {

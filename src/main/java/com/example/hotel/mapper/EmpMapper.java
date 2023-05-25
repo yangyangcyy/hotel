@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface EmpMapper extends BaseMapper<Emp> {
 	
-	Page<Emp> getEmpByCond (Page page , Integer empId , String empName , Integer deptId , String deptName , String isAdmin);
+	Page<Emp> getEmpByCond (Page page , Integer empId , String empName , Integer deptId , String isAdmin);
 	
 	int addEmp (Emp emp);
 	

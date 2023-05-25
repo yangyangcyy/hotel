@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hotel.mapper.FinanceMapper">
+	<select id="getFoodFinanceByCond" resultType="Finance">
+		select *
+		from (select CONVERT(DATE, CONCAT(YEAR(d.diningTime), '-', FORMAT(MONTH(d.diningTime), '00'), '-01')) time,
+		sum(d.price) money
+		from dining d
+		<where>
+			<if test="beginTime!=null and endTime!=null">
+				CONVERT(DATE, CONCAT(YEAR(d.diningTime), '-', FORMAT(MONTH(d.diningTime), '00'), '-01')) between
+				#{beginTime} and #{endTime}
+			</if>
+		</where>
+		group by CONVERT(DATE, CONCAT(YEAR(d.diningTime), '-', FORMAT(MONTH(d.diningTime), '00'), '-01'))) tmp
+		order by time
+	</select>
+</mapper>

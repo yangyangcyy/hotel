@@ -15,9 +15,6 @@
 			<if test="deptId!=null and deptId!=''">
 				and emp.deptId=#{deptId}
 			</if>
-			<if test="deptName!=null and deptName!=''">
-				and dept.deptName=#{deptName}
-			</if>
 			<if test="isAdmin!=null and isAdmin!=''">
 				and isAdmin=#{isAdmin}
 			</if>

@@ -12,9 +12,6 @@
 			<if test="roomTypeId!=null and roomTypeId!=''">
 				and r.roomTypeId=#{roomTypeId}
 			</if>
-			<if test="roomTypeName!=null and roomTypeName!=''">
-				and rT.roomTypeName=#{roomTypeName}
-			</if>
 			<if test="status!=null and status!=''">
 				and roomStatus=#{status}
 			</if>

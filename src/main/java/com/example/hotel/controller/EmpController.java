@@ -20,9 +20,9 @@ public class EmpController {
 	EmpService empService;
 	
 	@GetMapping ("/cond")
-	public Result getEmpByCond (@RequestParam (defaultValue = "-1") Integer current , @RequestParam (defaultValue = "-1") Integer size , Integer empId , String empName , Integer deptId , String deptName , String isAdmin) {
+	public Result getEmpByCond (@RequestParam (defaultValue = "-1") Integer current , @RequestParam (defaultValue = "-1") Integer size , Integer empId , String empName , Integer deptId , String isAdmin) {
 		Page page = new Page<> (current , size);
-		Page<Emp> empPage = empService.getEmpByCond (page , empId , empName , deptId , deptName , isAdmin);
+		Page<Emp> empPage = empService.getEmpByCond (page , empId , empName , deptId , isAdmin);
 		return Result.ok ().data ("items" , empPage);
 	}
 	

@@ -106,4 +106,52 @@
 		<association property="room" resultMap="roomMap"/>
 		<association property="emp" resultMap="empMap"/>
 	</resultMap>
+	
+	<resultMap id="renewMap" type="Renew">
+		<id property="id" column="id"/>
+		<result property="checkinId" column="checkinId"/>
+		<result property="orderTime" column="orderTime"/>
+		<result property="checkinDate" column="checkinDate"/>
+		<result property="checkoutDate" column="checkoutDate"/>
+		<result property="renewDays" column="renewDays"/>
+		<result property="nowCheckoutDate" column="nowCheckoutDate"/>
+		<association property="customer" resultMap="customerMap"/>
+		<association property="room" resultMap="roomMap"/>
+		<association property="emp" resultMap="empMap"/>
+	</resultMap>
+	
+	<resultMap id="diningReserveMap" type="DiningReserve">
+		<id property="reserveId" column="reserveId"/>
+		<result property="orderTime" column="orderTime"/>
+		<result property="reserveDiningTime" column="reserveDiningTime"/>
+		<result property="price" column="amount"/>
+		<result property="status" column="status"/>
+		<association property="customer" resultMap="customerMap"/>
+		<association property="table" resultMap="tableMap"/>
+	</resultMap>
+	
+	<resultMap id="reserveFoodMap" type="ReserveFood">
+		<id property="id" column="id"/>
+		<result property="quantity" column="quantity"/>
+		<association property="diningReserve" resultMap="diningReserveMap"/>
+		<association property="food" resultMap="foodMap"/>
+	</resultMap>
+	
+	<resultMap id="diningMap" type="Dining">
+		<id property="diningId" column="diningId"/>
+		<result property="diningTime" column="diningTime"/>
+		<result property="price" column="amount"/>
+		<result property="status" column="status"/>
+		<result property="comment" column="comment"/>
+		<association property="customer" resultMap="customerMap"/>
+		<association property="emp" resultMap="empMap"/>
+		<association property="table" resultMap="tableMap"/>
+	</resultMap>
+	
+	<resultMap id="actualFoodMap" type="ActualFood">
+		<id property="id" column="id"/>
+		<result property="quantity" column="quantity"/>
+		<association property="dining" resultMap="diningMap"/>
+		<association property="food" resultMap="foodMap"/>
+	</resultMap>
 </mapper>
