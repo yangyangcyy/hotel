@@ -34,7 +34,7 @@
 	<update id="updateCheckout">
 		update checkout
 		<set>
-			<if test="comment!=null">
+			<if test="comment!=null and comment!=''">
 				comment=#{comment}
 			</if>
 		</set>

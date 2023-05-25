@@ -41,7 +41,7 @@
 	<resultMap id="tableMap" type="Table">
 		<id property="tableId" column="tableId"/>
 		<result property="seats" column="seats"/>
-		<result property="status" column="status"/>
+		<result property="status" column="tableStatus"/>
 	</resultMap>
 	
 	<resultMap id="depotMap" type="Depot">
@@ -79,7 +79,7 @@
 		<result property="reserveCheckinDate" column="reserveCheckinDate"/>
 		<result property="reserveCheckoutDate" column="reserveCheckoutDate"/>
 		<result property="roomRate" column="roomRate"/>
-		<result property="status" column="roomStatus"/>
+		<result property="status" column="status"/>
 		<association property="customer" resultMap="customerMap"/>
 		<association property="room" resultMap="roomMap"/>
 	</resultMap>
@@ -153,5 +153,44 @@
 		<result property="quantity" column="quantity"/>
 		<association property="dining" resultMap="diningMap"/>
 		<association property="food" resultMap="foodMap"/>
+	</resultMap>
+	
+	<resultMap id="maintainEmpMap" type="Emp">
+		<id property="empId" column="empId1"/>
+		<result property="empName" column="empName1"/>
+		<result property="empSex" column="empSex1"/>
+		<result property="empAge" column="empAge1"/>
+		<result property="empPhone" column="empPhone1"/>
+		<result property="isAdmin" column="isAdmin1"/>
+		<result property="password" column="password1"/>
+		<result property="avatar" column="avatar1"/>
+		<result property="salary" column="salary1"/>
+		<association property="dept" resultMap="deptMap"/>
+	</resultMap>
+	
+	<resultMap id="empRepairMap" type="EmpRepair">
+		<id property="repairId" column="repairId"/>
+		<result property="repairContent" column="repairContent"/>
+		<result property="repairTime" column="repairTime"/>
+		<result property="startTime" column="startTime"/>
+		<result property="endTime" column="endTime"/>
+		<result property="repairCost" column="repairCost"/>
+		<result property="repairStatus" column="repairStatus"/>
+		<association property="emp" resultMap="empMap"/>
+		<association property="room" resultMap="roomMap"/>
+		<association property="maintainEmp" resultMap="maintainEmpMap"/>
+	</resultMap>
+	
+	<resultMap id="customerRepairMap" type="CustomerRepair">
+		<id property="repairId" column="repairId"/>
+		<result property="repairContent" column="repairContent"/>
+		<result property="repairTime" column="repairTime"/>
+		<result property="startTime" column="startTime"/>
+		<result property="endTime" column="endTime"/>
+		<result property="repairCost" column="repairCost"/>
+		<result property="repairStatus" column="repairStatus"/>
+		<association property="customer" resultMap="customerMap"/>
+		<association property="room" resultMap="roomMap"/>
+		<association property="emp" resultMap="empMap"/>
 	</resultMap>
 </mapper>

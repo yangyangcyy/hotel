@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hotel.mapper.CustomerRepairMapper">
+	<select id="getCustomerRepairByCond" resultMap="com.example.hotel.mapper.CommonMapper.customerRepairMap">
+		select *
+		from customerRepair cR
+		left join customer c on c.customerId = cR.customerId
+		left outer join room r on r.roomId = cR.roomId
+		left join emp e2 on e2.empId = cR.maintainEmpId
+		<where>
+			<if test="customerId!=null and customerId!=''">
+				cR.customerId=#{customerId}
+			</if>
+			<if test="roomId!=null and roomId!=''">
+				and cR.roomId=#{roomId}
+			</if>
+			<if test="maintainEmpId!=null and maintainEmpId!=''">
+				and cR.maintainEmpId=#{maintainEmpId}
+			</if>
+			<if test="repairStatus!=null and repairStatus!=''">
+				and cR.repairStatus=#{repairStatus}
+			</if>
+		</where>
+		order by cR.repairId;
+	</select>
+	
+	<insert id="addCustomerRepair">
+		insert into customerRepair(customerId, roomId, repairContent)
+		values (#{customer.customerId}, #{room.roomId}, #{repairContent})
+	</insert>
+	
+	<update id="updateCustomerRepair">
+		update customerRepair
+		<set>
+			<if test="maintainEmp!=null">
+				maintainEmpId=#{maintainEmp.maintainEmpId}
+			</if>
+			<if test="startTime!=null">
+				and startTime=#{startTime}
+			</if>
+			<if test="endTime!=null">
+				and endTime=#{endTime}
+			</if>
+			<if test="repairCost!=null">
+				and repairCost=#{repairCost}
+			</if>
+			<if test="repairStatus!=null">
+				and repairStatus=#{repairStatus}
+			</if>
+		</set>
+		where;
+	</update>
+</mapper>

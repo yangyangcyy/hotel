@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hotel.mapper.DiningMapper">
+	<select id="getDiningByCond" resultMap="com.example.hotel.mapper.CommonMapper.diningMap">
+		select *
+		from dining d
+		left join customer c on c.customerId = d.customerId
+		left join diningTable dT on dT.tableId = d.tableId
+		left join emp e on e.empId = d.empId
+		<where>
+			<if test="diningId!=null and diningId!=''">
+				d.diningId=#{diningId}
+			</if>
+			<if test="customerId!=null and customerId!=''">
+				and c.customerId=#{customerId}
+			</if>
+			<if test="tableId!=null and tableId!=''">
+				and dT.tableId=#{tableId}
+			</if>
+			<if test="empId!=null and empId!=''">
+				and e.empId=#{empId}
+			</if>
+			<if test="status!=null and status!=''">
+				and d.status=#{status}
+			</if>
+		</where>
+		order by d.diningId
+	</select>
+	
+	<insert id="addDining">
+		insert into dining (customerId, empId, tableId)
+		values (#{customer.customerId}, #{emp.empId}, #{table.tableId});
+	</insert>
+	
+	<update id="updateDining">
+		update dining
+		<set>
+			<if test="status!=null and status!=''">
+				status=#{status},
+			</if>
+			<if test="comment!=null and comment!=''">
+				comment=#{comment}
+			</if>
+		</set>
+		where diningId = #{diningId}
+	</update>
+	
+	<select id="selectId" resultType="Integer">
+		select IDENT_CURRENT('dining')
+	</select>
+</mapper>

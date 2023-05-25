@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hotel.mapper.EmpRepairMapper">
+	<select id="getEmpRepairByCond" resultMap="com.example.hotel.mapper.CommonMapper.empRepairMap">
+		select eR.*,
+		e.*,
+		r.*,
+		e2.empId empId1,
+		e2.empName empName1,
+		e2.empSex empSex1,
+		e2.empAge empAge1,
+		e2.empPhone empPhone1,
+		e2.deptId deptId1,
+		e2.salary salary1,
+		e2.avatar avatar1,
+		e2.password password1,
+		e2.isAdmin isAdmin1
+		from empRepair eR
+		left join emp e on e.empId = eR.empId
+		left outer join room r on r.roomId = eR.roomId
+		left join emp e2 on e2.empId = eR.maintainEmpId
+		<where>
+			<if test="empId!=null and empId!=''">
+				eR.empId=#{empId}
+			</if>
+			<if test="roomId!=null and roomId!=''">
+				and eR.roomId=#{roomId}
+			</if>
+			<if test="maintainEmpId!=null and maintainEmpId!=''">
+				and eR.maintainEmpId=#{maintainEmpId}
+			</if>
+			<if test="repairStatus!=null and repairStatus!=''">
+				and eR.repairStatus=#{repairStatus}
+			</if>
+		</where>
+		order by eR.repairId;
+	</select>
+	
+	<insert id="addEmpRepair">
+		insert into empRepair(empId, roomId, repairContent)
+		values (#{emp.empId}, #{room.roomId}, #{repairContent})
+	</insert>
+	
+	<update id="updateEmpRepair">
+		update empRepair
+		<set>
+			<if test="maintainEmp!=null">
+				maintainEmpId=#{maintainEmp.maintainEmpId}
+			</if>
+			<if test="startTime!=null">
+				and startTime=#{startTime}
+			</if>
+			<if test="endTime!=null">
+				and endTime=#{endTime}
+			</if>
+			<if test="repairCost!=null">
+				and repairCost=#{repairCost}
+			</if>
+			<if test="repairStatus!=null">
+				and repairStatus=#{repairStatus}
+			</if>
+		</set>
+		where;
+	</update>
+</mapper>

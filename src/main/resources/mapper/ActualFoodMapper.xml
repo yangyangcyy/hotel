@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hotel.mapper.ActualFoodMapper">
+	<select id="getActualFoodByCond" resultMap="com.example.hotel.mapper.CommonMapper.actualFoodMap">
+		select *
+		from actualFood aF
+		left join dining d on d.diningId = aF.diningId
+		left join diningTable dT on dT.tableId = d.tableId
+		left join customer c on c.customerId = d.customerId
+		left join emp e on e.empId = d.empId
+		left join food f on f.foodId = aF.foodId
+		<where>
+			<if test="diningId!=null and diningId!=''">
+				aF.diningId=#{diningId}
+			</if>
+			<if test="foodId!=null and foodId!=''">
+				and f.foodId=#{foodId}
+			</if>
+		</where>
+		order by aF.diningId,f.foodId
+	</select>
+	
+	<select id="existsActualFood" resultType="java.lang.Integer">
+		select count(*)
+		from actualFood aF
+		where aF.diningId = #{dining.diningId}
+		  and aF.foodId = #{food.foodId}
+	</select>
+	
+	<insert id="addMulActualFood">
+		insert into actualFood(diningId, foodId, quantity)
+		values
+		<foreach collection="actualFoods" index="index" item="item" separator=",">
+			(#{item.dining.diningId}, #{item.food.foodId},#{item.quantity})
+		</foreach>
+	</insert>
+	
+	<update id="updateMulActualFood">
+		<foreach collection="actualFoods" index="index" item="item" separator=",">
+			update actualFood
+			<set>
+				<if test="item.quantity != null">
+					quantity = #{item.quantity},
+				</if>
+			</set>
+			where diningId=#{item.dining.diningId} and foodId=#{item.food.foodId}
+		</foreach>
+	</update>
+</mapper>
